@@ -12,16 +12,31 @@ include "logics/Basic.php";
 include "libs/Cli.php";
 include "libs/functions.php";
 
-//Dealer
+// Dealer
 define("DECKS", 4);
 define("STAND", 17);
-//Logic
+// Logic
 define("LOGIC_HIT", 1);
 define("LOGIC_STAND", 2);
-//Debug
-define("DEBUG", true);
 
-$rolls = $argv[1] ? $argv[1] : 1;
+// Args
+if (count($argv)<2) {
+    // Help
+    Cli::output("Usage: ".$argv[0]." [options]\n", "help");
+    Cli::output("   -r: Number of rolls", "help");
+    Cli::finish("   -v: Verbosity level", "help");
+} else {
+    // Get args
+    $parameters = Cli::getArgs($argv);
+    // Rolls
+    $rolls = $parameters["r"];
+    // Debug
+    if ($parameters["v"] > 0) {
+        define("DEBUG", true);
+    } else {
+        define("DEBUG", false);
+    }
+}
 
 $roll = 0;
 
@@ -58,4 +73,4 @@ do {
 Cli::output("Odds", "title");
 Cli::output("Odds to win: ".avg($results["wins"], $rolls), "info");
 Cli::output("Odds to equal: ".avg($results["equals"], $rolls), "info");
-Cli::output("Odds to lose: ".avg($results["loses"], $rolls), "info");
+Cli::finish("Odds to lose: ".avg($results["loses"], $rolls), "info");

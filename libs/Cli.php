@@ -16,6 +16,47 @@ class Cli
         die(self::line($text."\n", $type, $debug));
     }
 
+    public static function getArgs($argv)
+    {
+        if (is_array($argv)) {
+            $string = implode(" ", $argv);
+            if ($string[0]!=" ") {
+                $string = " ".$string;
+            }
+            $arg_string = str_replace('--', '-', $string);
+            $args       = explode(' -', $arg_string);
+            $result = array();
+            # assemble an array of proper options
+            foreach ($args as $arg) {
+                # null out the local variables in this loop on every iteration
+                $option  = null;
+                $value   = null;
+
+                # separate the string on the equals sign if one exists
+                if (strpos($arg, '=')) {
+                    $option = trim(substr($arg, 0, strpos($arg, '=')));
+                    $value  = trim(substr($arg, strpos($arg, '=') + 1));
+                }
+
+                # otherwise, split on the first space
+                else if (strpos($arg, ' ')) {
+                    $option = trim(substr($arg, 0, strpos($arg, ' ')));
+                    $value  = trim(substr($arg, strpos($arg, ' ') + 1));
+                }
+
+                # if an option is set with no value, handle it
+                else {
+                    $option = trim($arg);
+                }
+                if ($option && $value) {
+                    $result[$option] = $value;
+                }
+            }
+
+            return $result;
+        }
+    }
+
     public static function progress($progress=0, $backward=5)
     {
         $progress = (int) $progress;
@@ -65,16 +106,20 @@ class Cli
             case "debug":
                 $text = "  -  ".$text;
                 break;
+            case "help":
+                $text = " ".$text;
+                $out = "[0;31m"; //Red
+                break;
             default:
                 $text = $text;
                 break;
         }
         if ($text) {
-            if($out)
-
+            if ($out) {
                 return chr(27).$out.$text.chr(27)."[0m\n";
-            else
+            } else {
                 return $text."\n";
+            }
         }
     }
 
