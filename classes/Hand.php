@@ -55,12 +55,14 @@ class Hand
             $max += $card->getValue($this->isDealer, $lowAs);
             // Car is an As?
             if ($card->value == "A") {
-                $lowAs = false;
+                $lowAs = true;
             }
         }
         // Better min?
         if ($min != 0 && $max > 21) {
-            return $min;
+            if ($max<$min) {
+                return $min;
+            }
         }
 
         return $max;
