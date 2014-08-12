@@ -16,8 +16,7 @@ class Logic
                 return LOGIC_STAND;
             }
         }
-        if ($playerValue <= 21) {
-            return LOGIC_STAND;
-        }
+
+        return LOGIC_STAND;
     }
 }

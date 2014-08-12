@@ -47,12 +47,12 @@ class Hand
         if ($this->gotAs()) {
             // Min value
             foreach ($this->cards as $card) {
-                $min += $card->getValue($this->isDealer, true);
+                $min += $card->getValue(true);
             }
         }
         // Max value
         foreach ($this->cards as $card) {
-            $max += $card->getValue($this->isDealer, $lowAs);
+            $max += $card->getValue($lowAs);
             // Car is an As?
             if ($card->value == "A") {
                 $lowAs = true;

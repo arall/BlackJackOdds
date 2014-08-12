@@ -7,7 +7,7 @@ include "classes/Game.php";
 include "classes/Deck.php";
 include "classes/Hand.php";
 include "classes/Card.php";
-include "logics/Basic.php";
+include "logics/Wizards.php";
 // Libs
 include "libs/Cli.php";
 include "libs/functions.php";
