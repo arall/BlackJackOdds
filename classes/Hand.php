@@ -81,6 +81,10 @@ class Hand
         return false;
     }
 
+    /**
+     * Hand to string
+     * @return string
+     */
     public function toString()
     {
         $return = array();

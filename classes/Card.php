@@ -38,6 +38,10 @@ class Card
         return $this->value;
     }
 
+    /**
+     * Card to string
+     * @return string
+     */
     public function toString()
     {
         return $this->value.$this->suit;
